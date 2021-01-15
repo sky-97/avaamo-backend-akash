@@ -22,7 +22,11 @@ module.exports = {
     updated: '2021-01-12T14:55:15+00:00',
     tolerated_failures : 'false',
     createdAt : '2021-01-12T14:55:15+00:00',
-    updatedAt : '2021-01-12T14:55:15+00:00'
+    updatedAt : '2021-01-12T14:55:15+00:00',
+    phones: '123',
+    emails: 'akash@gmail.com',
+    url : 'www.google.com',
+    method : 'get'
     }, ], {});
   },
 

@@ -1,7 +1,7 @@
 {
   "development": {
     "dialect" : "sqlite",
-    "storage" : "./newdatabasev2.sqlite3"
+    "storage" : "./avaamo.sqlite3"
   },
   "test": {
     "username": "root",

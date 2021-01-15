@@ -25,6 +25,14 @@ fs
     db[model.name] = model;
   });
 
+//   const { QueryTypes } = require('sequelize');
+
+// async function  getAll () {
+//   return  await sequelize.query("SELECT * FROM `Jobs`", { type: QueryTypes.SELECT })
+// }
+
+// console.log(`this is data`, getAll().then((r) =>  r))
+
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

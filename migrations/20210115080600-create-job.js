@@ -9,30 +9,37 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       status: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       name: {
-        allowNull: false,
+        type: Sequelize.STRING
+      },
+      phones: {
+        type: Sequelize.STRING
+      },
+      emails: {
         type: Sequelize.STRING
       },
       timezone: {
-        allowNull: false,
+        type: Sequelize.STRING
+      },
+      url: {
+        type: Sequelize.STRING
+      },
+      method: {
         type: Sequelize.STRING
       },
       request_interval_seconds: {
-        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      tolerated_failures: {
         type: Sequelize.INTEGER
       },
       created: {
-        allowNull: false,
         type: Sequelize.DATE
       },
       updated: {
         type: Sequelize.DATE
-      },
-      tolerated_failures: {
-        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
