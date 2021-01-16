@@ -6,9 +6,15 @@ const schedule = require("node-schedule");
 const axios = require("axios");
 const app = express();
 const Sequelize = require("sequelize");
+var cors = require('cors')
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
 
 app.use(bodyParser.json());
+app.use(cors())
 
+// get request
 app.get("/api/jobs", (req, res) => {
   console.log("i am here");
   return db.Job.findAll()
@@ -19,6 +25,13 @@ app.get("/api/jobs", (req, res) => {
     });
 });
 
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
+
+
+// post request
 app.post("/api/jobs", (req, res) => {
   console.log(req.body);
   const {
@@ -36,6 +49,8 @@ app.post("/api/jobs", (req, res) => {
   const method = req.body.request.method;
   const phones = req.body.request.notifications;
   const emails = req.body.request.notifications;
+  const enable = 1;
+
   return db.Job.create({
     status,
     name,
@@ -50,6 +65,7 @@ app.post("/api/jobs", (req, res) => {
     method,
     phones,
     emails,
+    enable
   })
     .then((contact) => res.send(contact))
     .catch((err) => {
