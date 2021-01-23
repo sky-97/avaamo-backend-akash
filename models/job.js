@@ -1,33 +1,58 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Job extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+const mongoose = require('mongoose');
+
+const jobSchema = new mongoose.Schema({
+    name : {
+        type : String,
+        required : true,
+        unique : true,
+    },
+    status : {
+        type : String,
+        required : true,        
+    },
+    notifications :{
+        type : Object,
+        required : true
+    },
+    timezone : {
+        type : String,
+        required : false,  
+    },
+    request :{
+        type : Object,
+        required : true
+    },
+    request_interval_seconds : {
+        type : Number,
+        required : true
+    },
+    tolerated_failures : {
+        type : Number,
+        required : false,
+        default : null
+    },
+    created : {
+        type : Date, 
+        default: Date.now,
+        required : true,
+                
+    },
+    updated : {
+        type : Date, 
+        required : false,      
+    },
+    enable : {
+        type : Boolean,
+        required : false, 
+        default : false,   
+    },
+    trigger : {
+        type : Boolean,
+        required : false, 
+        default : false,   
     }
-  };
-  Job.init({
-    status: DataTypes.STRING,
-    name: DataTypes.STRING,
-    phones: DataTypes.STRING,
-    emails: DataTypes.STRING,
-    timezone: DataTypes.STRING,
-    url: DataTypes.STRING,
-    method: DataTypes.STRING,
-    request_interval_seconds: DataTypes.INTEGER,
-    tolerated_failures: DataTypes.INTEGER,
-    created: DataTypes.DATE,
-    updated: DataTypes.DATE
-  }, {
-    sequelize,
-    modelName: 'Job',
-  });
-  return Job;
-};
+})
+
+
+
+module.exports = mongoose.model('Job', jobSchema )

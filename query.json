@@ -1,0 +1,37 @@
+{
+    "_id": "60091c9a6b0ec527145041ff",
+    "tolerated_failures": null,
+    "enable": false,
+    "status": "Healthy 1min ago",
+    "name": "Update content from facebook",
+    "notifications": {
+        "phones": [],
+        "emails": []
+    },
+    "timezone": "UTC",
+    "request": {
+        "url": "https://facebook.in",
+        "method": "GET"
+    },
+    "request_interval_seconds": 600,
+    "created": "2021-01-12T14:55:15.000Z",
+    "__v": 0
+}{
+    "_id": "60094025f22f83162404d8dd",
+    "tolerated_failures": null,
+    "enable": false,
+    "status": "Healthy 1min ago",
+    "name": "Update content from Amazon",
+    "notifications": {
+        "phones": [],
+        "emails": []
+    },
+    "timezone": "UTC",
+    "request": {
+        "url": "https://amazon.in",
+        "method": "GET"
+    },
+    "request_interval_seconds": 600,
+    "created": "2021-01-12T14:55:15.000Z",
+    "__v": 0
+}
