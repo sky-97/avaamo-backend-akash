@@ -5,7 +5,7 @@ const Job = require("../models/job");
 
 router.get("/", getJobs);
 router.post("/", addJob);
-router.post("/scripts",addJobFromScript)
+router.post("/scripts", addJobFromScript);
 router.get("/:id", async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -31,9 +31,6 @@ router.put("/:id", async (req, res) => {
     console.log(job);
     const a1 = await job.save();
     res.json(a1);
-    io.on("connection", (socket) => {
-      socket.emit("event", a1);
-    });
   } catch (err) {
     res.send("Error" + err);
   }

@@ -3,14 +3,13 @@ const mongoose = require("mongoose");
 var MongoClient = require("mongodb").MongoClient;
 // database config
 const url =
-  "mongodb+srv://akash:ExSwibt7xIcHlvEp@cluster0.u0fbv.mongodb.net/Avamoo?retryWrites=true&w=majority";
+  "mongodb+srv://akash:oU8IkZ6KJ58x1gW5@cluster0.u0fbv.mongodb.net/avamoo?retryWrites=true&w=majority";
 const cors = require("cors");
 const app = express();
 const path = require("path");
 const http = require("http");
 const server = http.createServer(app);
 const socketio = require("socket.io");
-
 
 const io = socketio(server, {
   cors: {
@@ -27,7 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 function getAllData(callback) {
   MongoClient.connect(url, function (err, db) {
     if (err) throw err;
-    var dbo = db.db("Avamoo");  
+    var dbo = db.db("avamoo");
 
     dbo
       .collection("jobs")
@@ -43,16 +42,15 @@ function getAllData(callback) {
 // socket connection
 io.of("").on("connection", (socket) => {
   console.log("socket.io: User connected: ", socket.id);
-// socket query jobs tabke and emit the data
+  // socket query jobs tabke and emit the data
   getAllData((data) => {
     socket.emit("event", data);
   });
-// emit when client disconnects
+  // emit when client disconnects
   socket.on("disconnect", () => {
     console.log("socket.io: User disconnected: ", socket.id);
   });
 });
-
 
 const db = mongoose.connection;
 db.once("open", () => {
@@ -81,7 +79,6 @@ db.once("open", () => {
     }
   });
 });
-
 
 // to do scheduleJob , we have to get all the data from the jobs table
 getAllData((data) => {
@@ -113,7 +110,7 @@ getAllData((data) => {
             );
 
             console.log(
-              `i ran url ${data[j]["request"].url} and got  ${resp.status}`
+              `i ran url ${data[j]["request"].url} and got  ${resp.status} at ${data[j].request_interval_seconds}`
             );
           } catch (e) {
             var query = { _id: data[j]._id };
@@ -150,12 +147,10 @@ app.use(express.json());
 app.use(cors());
 
 const jobsRouter = require("./routers/jobs");
-const usersRouter = require("./routers/users")
+const usersRouter = require("./routers/users");
 // if route is http://localhost:9000/api/jobs then triggere jobs router else triggere
 app.use("/api/jobs", jobsRouter);
 app.use("/api/users", usersRouter);
-
-
 
 server.listen(9000, () => {
   console.log("Server started");
