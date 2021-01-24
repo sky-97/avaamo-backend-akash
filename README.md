@@ -27,7 +27,7 @@ in this project i followed MVC
 
 
         |avaamo-backend-akash
-                
+                 ├── script (python script to get data from the folder to read more please check script folder readme)
                 ├── controllers (Controller implements a »Controller pattern, in which all requests are intercepted by controller and dispatched to individual Action Controllers based on the URL requested(that is routing request from Router). )
                 
                 ├── models (

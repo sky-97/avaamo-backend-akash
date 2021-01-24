@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { addJob, getJobs } = require("../controllers/jobs");
+const { addJob, getJobs, addJobFromScript } = require("../controllers/jobs");
 const Job = require("../models/job");
 
 router.get("/", getJobs);
 router.post("/", addJob);
-
+router.post("/scripts",addJobFromScript)
 router.get("/:id", async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);

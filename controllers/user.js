@@ -22,6 +22,30 @@ const addUSer = async (req, res) => {
   }
 };
 
+const addUsersFromScript = async (req, res) => {
+  console.log(req.body.data);
+  try {
+    for (let i = 0; i < req.body.data.length; i++) {
+      const element = req.body.data[i];
+      const user = await User.create({
+        photoUrl: element.photoUrl,
+        name: element.name,
+        label: element.label,
+        type: element.type,
+      });
+      const a1 = await user.save();
+      return res.json({
+        success: true,
+        message: a1,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400);
+    res.send(error);
+  }
+};
+
 const getUsers = async (req, res) => {
   try {
     const user = await User.find();
@@ -42,4 +66,5 @@ const getUsers = async (req, res) => {
 module.exports = {
   addUSer,
   getUsers,
+  addUsersFromScript,
 };

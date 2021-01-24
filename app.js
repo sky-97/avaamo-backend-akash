@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 var MongoClient = require("mongodb").MongoClient;
 // database config
 const url =
-  "mongodb+srv://akash:akash@cluster0.u0fbv.mongodb.net/Avamoo?retryWrites=true&w=majority";
+  "mongodb+srv://akash:ExSwibt7xIcHlvEp@cluster0.u0fbv.mongodb.net/Avamoo?retryWrites=true&w=majority";
 const cors = require("cors");
 const app = express();
 const path = require("path");
@@ -99,12 +99,8 @@ getAllData((data) => {
               console.log("sever side good status", data[j].name);
               io.of("").emit("sendGoodStatus", data[j].name);
             }
-            // if previously the job had error , now ran successfuly then we have to make trigger false
-            if(data[j].trigger){
-              var query = { _id: data[j]._id };
+            var query = { _id: data[j]._id };
             data[j].trigger = false;
-            }
-            //update triggere field
 
             Job.findOneAndUpdate(
               query,
@@ -120,7 +116,6 @@ getAllData((data) => {
               `i ran url ${data[j]["request"].url} and got  ${resp.status}`
             );
           } catch (e) {
-            // if job ran unsucessfully then we have to show it in fe, by making triggere true
             var query = { _id: data[j]._id };
             data[j].trigger = true;
 
@@ -156,7 +151,7 @@ app.use(cors());
 
 const jobsRouter = require("./routers/jobs");
 const usersRouter = require("./routers/users")
-// if route is http://localhost:9000/api/jobs then triggere jobs router else triggere usersRouter
+// if route is http://localhost:9000/api/jobs then triggere jobs router else triggere
 app.use("/api/jobs", jobsRouter);
 app.use("/api/users", usersRouter);
 
