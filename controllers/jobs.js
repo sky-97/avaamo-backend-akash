@@ -49,36 +49,6 @@ const getJobs = async (req, res) => {
   }
 };
 
-// const updateJob = async (req, res) => {
-//     try {
-//         const job = await Job.findById(req.params.id);
-//       job.status = req.body.status,
-//       job.name= req.body.name,
-//       job.notifications =req.body.notifications,
-//       job.timezone= req.body.timezone,
-//       job.request= req.body.request,
-//       job.request_interval_seconds= req.body.request_interval_seconds,
-//       job.tolerated_failures= req.body.tolerated_failures,
-//       job.created= req.body.created,
-//       job.updated= req.body.updated,
-//       job.enable = req.body.enable
-//       const a1 = await job.save()
-//       return res.json({
-//         success: true,
-//         message: a1,
-//       });
-      
-//     }
-//     catch (error) {
-//         console.log("Error with updating job: ", error);
-//         return res.json({
-//           success: false,
-//           message:
-//             "Error with updating job. See server console for more info.",
-//         });
-//       }
-// }
-
 module.exports = {
     addJob,
     getJobs,
