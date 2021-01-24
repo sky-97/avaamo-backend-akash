@@ -22,10 +22,11 @@ to install all the dependencies
 command to run the project 
 
 *   ```nodemon npm start```
+
 in this project i followed MVC 
 
- |avaamo-backend-akash
-     ├── AddNewJob.vue 
+
+        |avaamo-backend-akash
                 
                 ├── controllers (Controller implements a »Controller pattern, in which all requests are intercepted by controller and dispatched to individual Action Controllers based on the URL requested(that is routing request from Router). )
                 
@@ -40,3 +41,6 @@ in this project i followed MVC
                 ├── app.js 
 
                 ├── package.json
+
+## descripttion 
+    This project  contains api endpoints, server side socket and  a job scheduler, with help of socket server will query the "jobs" table and send the data through socket, we are using socket because we need real time data in the frontend, created socket for each db operation type like update delete and insert. A job scheduler will loop the "jobs" table data and hit the endpoint mentioned in the data and get the status as response , if status is 200 then job is successfully and then we emit socket to fe to show the successfully job notification, is its not the we changed the boolean field "triggere" to true, as the data is real time data in fe, if triggere is true then we show "red cross" in fe means job is unsuccessfull. created users table which have "get" and "post" functions.
