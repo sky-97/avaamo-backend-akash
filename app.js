@@ -61,6 +61,9 @@ db.once("open", () => {
       // if new data is added to a jobs table "newJob" socket is triggered
       case "insert":
         io.of("").emit("newJob", change.fullDocument);
+        getAllData((data) => {
+          io.of("").emit("newJobTrigger", data);
+        });
         break;
       // if  data updated in jobs table "updateJob" socket is triggered
 
@@ -86,32 +89,42 @@ getAllData((data) => {
 
   for (let j = 0; j < data.length; j++) {
     schedule.scheduleJob(
+      data[j].name,
       `*/${data[j].request_interval_seconds} * * * * *`,
       async () => {
+        console.log(data[j]);
         // condition to check if that particular job is paused or unpaused
         if (data[j].enable) {
           try {
-            let resp = await axios.get(`${data[j]["request"].url}`);
-            if (resp.status === 200) {
-              console.log("sever side good status", data[j].name);
-              io.of("").emit("sendGoodStatus", data[j].name);
-            }
-            var query = { _id: data[j]._id };
-            data[j].trigger = false;
+            let resp = await axios
+              .get(`${data[j]["request"].url}`)
+              .then((res) => {
+                console.log(`this is resp`, res.status);
+                console.log("sever side good status", data[j].name);
+                io.of("").emit("sendGoodStatus", data[j].name);
+                schedule.cancelJob(data[j].name);
+              })
+              .catch(({ resp }) => {
+                console.log(resp);
 
-            Job.findOneAndUpdate(
-              query,
-              data[j],
-              { upsert: true },
-              function (err, doc) {
-                if (err) return console.log("error while adding trigger");
-                return console.log("Succesfully saved.");
-              }
-            );
+                var query = { _id: data[j]._id };
+                data[j].trigger = false;
 
-            console.log(
-              `i ran url ${data[j]["request"].url} and got  ${resp.status} at ${data[j].request_interval_seconds}`
-            );
+                Job.findOneAndUpdate(
+                  query,
+                  data[j],
+                  { upsert: true },
+                  function (err, doc) {
+                    if (err) return console.log("error while adding trigger");
+                    return console.log("Succesfully saved.");
+                  }
+                );
+
+                console.log(
+                  `i ran url ${data[j]["request"].url} and got  ${resp.status} at ${data[j].request_interval_seconds}`
+                );
+                schedule.cancelJob(data[j].name);
+              });
           } catch (e) {
             var query = { _id: data[j]._id };
             data[j].trigger = true;
@@ -129,7 +142,10 @@ getAllData((data) => {
             console.log(
               "There has been a problem with your fetch operation: " + e.message
             );
+            schedule.cancelJob(data[j].name);
           }
+        } else {
+          console.log("job is paused ", data[i].name);
         }
       }
     );
