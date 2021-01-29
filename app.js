@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 var MongoClient = require("mongodb").MongoClient;
 // database config
 const url =
-  "mongodb+srv://akash:oU8IkZ6KJ58x1gW5@cluster0.u0fbv.mongodb.net/avamoo?retryWrites=true&w=majority";
+  add your mongodb url";
 const cors = require("cors");
 const app = express();
 const path = require("path");
